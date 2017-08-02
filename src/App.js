@@ -14,6 +14,19 @@ class App extends Component {
       currentlyReading: []
     }
   }
+
+  updateBook = (bookToUpdate, newShelf) => {
+    let bookShelfs = this.state.bookShelfs
+
+    let books = bookShelfs[bookToUpdate.shelf].filter((book) => {
+        return book.id !== bookToUpdate.id
+    })
+    bookShelfs[bookToUpdate.shelf] = books
+    bookToUpdate.shelf = newShelf;
+    bookShelfs[newShelf].push(bookToUpdate)
+    this.setState({bookShelfs})
+  }
+
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       let bookShelfs = {
@@ -29,9 +42,9 @@ class App extends Component {
       this.setState({bookShelfs})
     })
   }
+
   render() {
     const {bookShelfs} = this.state;
-
     return (
       <div>
         <Route exact path="/" render={() => (
@@ -41,9 +54,9 @@ class App extends Component {
             </div>
             <div className="list-books-content">
                 <div>
-                   <BookShelf books={bookShelfs['currentlyReading']} title="Currently reading" />
-                   <BookShelf books={bookShelfs['wantToRead']} title="Want to read" />
-                   <BookShelf books={bookShelfs['read']} title="Read" />
+                   <BookShelf books={bookShelfs['currentlyReading']} title="Currently reading" onUpdateBook={this.updateBook} />
+                   <BookShelf books={bookShelfs['wantToRead']} title="Want to read" onUpdateBook={this.updateBook} />
+                   <BookShelf books={bookShelfs['read']} title="Read" onUpdateBook={this.updateBook} />
                 </div>
             </div>
             <div className="open-search">

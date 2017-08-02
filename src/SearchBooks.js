@@ -21,9 +21,23 @@ class SearchBooks extends Component {
 		}
 	}
 
+	updateBook = (updatedBook) => {
+		let books = this.state.books || []
+		books = books.map((book) => {
+			if(book.id === updatedBook.id) {
+				return updatedBook
+			}
+			return book
+		})
+		this.setState({books})
+	}
+
 	search = () => {
 		BooksAPI.search(this.state.query, 25).then((books) => {
-			books = books || []
+			if(!books || !Array.isArray(books)){
+				books = []
+			}
+			console.log(books)
 	      	this.setState({books})
 	    })
 	}
@@ -52,7 +66,7 @@ class SearchBooks extends Component {
               		<ol className="books-grid">
               			{books.map((book) => (
 				        	<li key={book.id}>
-                            	<Book book={book} />
+                            	<Book book={book} onUpdate={this.updateBook}/>
                         	</li>
 				        ))}
               		</ol>
