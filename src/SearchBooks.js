@@ -21,15 +21,18 @@ class SearchBooks extends Component {
 		}
 	}
 
-	updateBook = (updatedBook) => {
+	moveBookToShelf = (bookToMove, newShelf) => {
 		let books = this.state.books || []
 		books = books.map((book) => {
-			if(book.id === updatedBook.id) {
-				return updatedBook
+			if(book.id === bookToMove.id) {
+				book.shelf = newShelf;
 			}
 			return book
 		})
 		this.setState({books})
+		if (this.props.onBookUpdate) {
+			this.props.onBookUpdate(bookToMove, newShelf)
+		}
 	}
 
 	search = () => {
@@ -66,7 +69,7 @@ class SearchBooks extends Component {
               		<ol className="books-grid">
               			{books.map((book) => (
 				        	<li key={book.id}>
-                            	<Book book={book} onUpdate={this.updateBook}/>
+                            	<Book book={book} onUpdate={this.moveBookToShelf}/>
                         	</li>
 				        ))}
               		</ol>

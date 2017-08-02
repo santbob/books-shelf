@@ -17,7 +17,6 @@ class App extends Component {
 
   updateBook = (bookToUpdate, newShelf) => {
     let bookShelfs = this.state.bookShelfs
-
     let books = bookShelfs[bookToUpdate.shelf].filter((book) => {
         return book.id !== bookToUpdate.id
     })
@@ -54,9 +53,9 @@ class App extends Component {
             </div>
             <div className="list-books-content">
                 <div>
-                   <BookShelf books={bookShelfs['currentlyReading']} title="Currently reading" onUpdateBook={this.updateBook} />
-                   <BookShelf books={bookShelfs['wantToRead']} title="Want to read" onUpdateBook={this.updateBook} />
-                   <BookShelf books={bookShelfs['read']} title="Read" onUpdateBook={this.updateBook} />
+                   <BookShelf books={bookShelfs['currentlyReading']} title="Currently reading" onBookUpdate={this.updateBook} />
+                   <BookShelf books={bookShelfs['wantToRead']} title="Want to read" onBookUpdate={this.updateBook} />
+                   <BookShelf books={bookShelfs['read']} title="Read" onBookUpdate={this.updateBook} />
                 </div>
             </div>
             <div className="open-search">
@@ -65,7 +64,7 @@ class App extends Component {
           </div>
         )} />
         <Route exact path="/search" render={() => (
-          <SearchBooks />
+          <SearchBooks onBookUpdate={this.updateBook}/>
         )} />
       </div>
     );
