@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Table of Contents
 
-- [Folder Structure](#how-to-install-and-run-the-app)
+- [How To Install And Run The App](#how-to-install-and-run-the-app)
 - [Available Scripts](#available-scripts)
   - [npm start](#npm-start)
   - [npm test](#npm-test)
