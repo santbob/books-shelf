@@ -10,10 +10,9 @@ class SearchBooks extends Component {
   };
 
   updateQuery = query => {
-    query = query.trim();
     if (query) {
       this.setState({
-        query: query.trim()
+        query: query
       });
       this.search();
     } else {
@@ -23,11 +22,11 @@ class SearchBooks extends Component {
 
   moveBookToShelf = (bookToMove, newShelf) => {
     let books = this.state.books || [];
-    books = books.map(book => {
+    books.forEach(book => {
       if (book.id === bookToMove.id) {
-        book.shelf = newShelf;
+        bookToMove.shelf = newShelf
+        book = bookToMove
       }
-      return book;
     });
     this.setState({ books });
     if (this.props.onBookUpdate) {
@@ -36,7 +35,7 @@ class SearchBooks extends Component {
   };
 
   search = () => {
-    BooksAPI.search(this.state.query, 25).then(books => {
+    BooksAPI.search(this.state.query.trim(), 25).then(books => {
       if (!books || !Array.isArray(books)) {
         books = [];
       }
